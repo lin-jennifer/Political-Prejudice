@@ -63,11 +63,11 @@ ditch_the_axes <- theme(
 )
 
 #Create US Plot
-usplot = ggplot(data = usa) + 
-  geom_polygon(mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey") +
-  geom_point(data=xcode, aes(x=longitude, y=latitude, colour=pid3), na.rm = TRUE)+
+usplot + ggplot(data = usa) + 
+  geom_polygon(mapping = aes(x = long, y = lat, group = group), color = "black", fill = NA, size = .25) +
+  geom_point(data=xcode, aes(x=longitude, y=latitude, color = pid3),na.rm = TRUE, size = .5)+
   coord_fixed(1.3)+ theme_bw() +
-  ditch_the_axes
+  ditch_the_axes 
 
 pid3 = c("Republican" = "red", "Democrat" = "blue", "Independent" = "white", "NA" = "NA")
 usplot + scale_colour_manual(values=pid3, 
@@ -90,6 +90,7 @@ ggplot(data = floridamap) +
 
 ggplot(data = floridamap) + 
   geom_polygon(mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey") +
-  geom_point(data=florida, aes(x = longitude, y = latitude, colour=pid3))+
+  geom_point(data=florida, aes(x = longitude, y = latitude, colour=pid3), size = .5)+
   coord_fixed(1.3) + theme_bw() +
   ditch_the_axes
+
