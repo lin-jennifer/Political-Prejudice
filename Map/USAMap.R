@@ -62,21 +62,22 @@ ditch_the_axes <- theme(
   axis.title = element_blank()
 )
 
+#Create US Plot
 usplot = ggplot(data = usa) + 
   geom_polygon(mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey") +
   geom_point(data=xcode, aes(x=longitude, y=latitude, colour=pid3), na.rm = TRUE)+
   coord_fixed(1.3)+ theme_bw() +
   ditch_the_axes
 
-partycols = c("Republican" = "red", "Democrat" = "blue", "Independent" = "white", "NA" = "NA")
-usplot + scale_colour_manual(values=partycols, 
+pid3 = c("Republican" = "red", "Democrat" = "blue", "Independent" = "white", "NA" = "NA")
+usplot + scale_colour_manual(values=pid3, 
                     name="Party ID",
                   breaks=c("Democrat", "Republican", "Independent", "NA"),
                     labels=c("Democrat", "Republican", "Independent", "NA"))
 
 usplot
 
-
+#Shrink the Map to Just Florida
 #Only include Florida
 florida = subset(xcode, state == "FL")
 floridamap = subset(usa, region == "florida")
@@ -89,6 +90,6 @@ ggplot(data = floridamap) +
 
 ggplot(data = floridamap) + 
   geom_polygon(mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey") +
-  geom_point(data=florida, aes(x=longitude, y=latitude, colour=pid3), na.rm = TRUE)+
+  geom_point(data=florida, aes(x = longitude, y = latitude, colour=pid3))+
   coord_fixed(1.3) + theme_bw() +
   ditch_the_axes
