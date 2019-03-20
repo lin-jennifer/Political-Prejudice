@@ -141,4 +141,18 @@ ggplot(cali, aes(longitude, latitude)) +
         title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
   ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
+#New Jersey
+jersey = subset(xcode, state == "NJ")
+njmap = subset(usa, region == "new jersey")
+
+ggplot(jersey, aes(longitude, latitude)) + 
+  geom_polygon(data = njmap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() + 
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
+
+
 
