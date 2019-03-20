@@ -37,6 +37,10 @@ ggplot(data = usa) +
   coord_fixed(1.3)+
   guides(fill=FALSE)
 
+#Import County Data
+counties <- map_data("county")
+counties
+
 #Generate longitude and latitude from CCES data points
 data(zipcode)
 xcode = merge(x, zipcode, by.x='zip', by.y='zip')
@@ -67,12 +71,27 @@ ditch_the_axes <- theme(
 #Jitter Points
 jitter <- position_jitter(width = 0.1, height = 0.1)
 
+######################################
 #Florida
 florida = subset(xcode, state == "FL")
 floridamap = subset(usa, region == "florida")
+flcounties = subset(counties, region == "florida")
 
+#Florida without the Counties
 ggplot(florida, aes(longitude, latitude)) + 
   geom_polygon(data = floridamap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() + 
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
+
+#Florida With Counties
+ggplot(florida, aes(longitude, latitude)) + 
+  geom_polygon(data = floridamap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_polygon(data = flcounties, mapping = aes(x = long, y = lat, group = group), fill = NA, color = "white")+
+  geom_polygon(data = floridamap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = NA)+
   geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
   coord_fixed(1.3)+ theme_bw() +  
   theme(text = element_text(size = 18, colour="black"),
@@ -80,7 +99,7 @@ ggplot(florida, aes(longitude, latitude)) +
         title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
   ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
-
+######################################
 #Massachusetts
 mass = subset(xcode, state == "MA")
 massmap = subset(usa, region == "massachusetts")
@@ -94,6 +113,7 @@ ggplot(mass, aes(longitude, latitude)) +
         title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
   ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
+############################################
 #New York
 ny = subset(xcode, state == "NY")
 nymap = subset(usa, region == "new york")
@@ -107,6 +127,7 @@ ggplot(ny, aes(longitude, latitude)) +
         title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
   ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
+##################################
 #California
 cali = subset(xcode, state == "CA")
 camap = subset(usa, region == "california")
