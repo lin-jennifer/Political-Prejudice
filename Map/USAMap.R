@@ -20,6 +20,7 @@ library(mapproj)
 library(tidyverse)
 library(dplyr)
 library(ggpubr)
+library(car)
 
 #Packages for Interactive Maps
 library(tmap)    # for static and interactive maps
@@ -101,13 +102,18 @@ ggplotly(usmap)
 map = leaflet::leaflet() %>%
   leaflet::addProviderTiles(providers$OpenStreetMap)
 
-intcolormap <- xcode
+#Recode pid3
+xcode$pid3num <- recode(xcode$pid3, "Democrat" = 1, "Republican" = 2, "Independent" = 3)
+xcode$pid3num
+
+interactus <- xcode
+
 getColor <- function(xcode) {
-  sapply(xcode$pid3, function(pid3) {
-    if(xcode$pid3 == 'Republican') {
-      "red"
-    } else if(xcode$pid3 == 'Democrat') {
+  sapply(xcode$pid3num, function(pid3num) {
+    if(pid3num <= 1) {
       "blue"
+    } else if(pid3num <= 2) {
+      "red"
     } else {
       "white"
     } })
@@ -117,10 +123,10 @@ icons <- awesomeIcons(
   icon = 'ios-close',
   iconColor = 'black',
   library = 'ion',
-  markerColor = getColor(intcolormap)
+  markerColor = getColor(interactus)
 )
 
-leaflet(intcolormap) %>% addTiles() %>%
+leaflet(interactus) %>% addTiles() %>%
   addAwesomeMarkers(~longitude, ~latitude, icon=icons, label=~as.character(pid3))
 
 #This Interactive Plot works but all the icons are the same color
