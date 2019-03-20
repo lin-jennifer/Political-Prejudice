@@ -21,6 +21,12 @@ library(tidyverse)
 library(dplyr)
 library(ggpubr)
 
+#Packages for Interactive Maps
+library(tmap)    # for static and interactive maps
+library(leaflet) # for interactive maps
+library(mapview) # for interactive maps
+library(plotly)
+
 #Look At Zip Code Variable
 str(x$lookupzip)
 #rename variable
@@ -79,3 +85,44 @@ ggplot(xcode, aes(longitude, latitude)) +
 ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
 
+#Make this map interactive
+usmap = ggplot(xcode, aes(longitude, latitude)) + 
+  geom_polygon(data = usa, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() +
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
+usmap
+ggplotly(usmap)
+
+#Interactive May using Leadlet
+map = leaflet::leaflet() %>%
+  leaflet::addProviderTiles(providers$OpenStreetMap)
+
+intcolormap <- xcode
+getColor <- function(xcode) {
+  sapply(xcode$pid3, function(pid3) {
+    if(xcode$pid3 == 'Republican') {
+      "red"
+    } else if(xcode$pid3 == 'Democrat') {
+      "blue"
+    } else {
+      "white"
+    } })
+}
+
+icons <- awesomeIcons(
+  icon = 'ios-close',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = getColor(intcolormap)
+)
+
+leaflet(intcolormap) %>% addTiles() %>%
+  addAwesomeMarkers(~longitude, ~latitude, icon=icons, label=~as.character(pid3))
+
+#This Interactive Plot works but all the icons are the same color
+leaflet(data = xcode) %>% addTiles() %>%
+  addMarkers(~longitude, ~latitude, popup = ~as.character(pid3), label = ~as.character(pid3))
