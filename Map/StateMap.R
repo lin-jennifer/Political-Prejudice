@@ -71,12 +71,14 @@ jitter <- position_jitter(width = 0.1, height = 0.1)
 florida = subset(xcode, state == "FL")
 floridamap = subset(usa, region == "florida")
 
-
 ggplot(florida, aes(longitude, latitude)) + 
-  geom_polygon(data = floridamap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey87", size = .25) +
-  geom_point(aes(color = pid3), size = .5, na.rm = TRUE, position = jitter)+
-  coord_fixed(1.3)+ theme_bw() + 
-  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "white"))
+  geom_polygon(data = floridamap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() +  
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
 
 #Massachusetts
@@ -84,9 +86,38 @@ mass = subset(xcode, state == "MA")
 massmap = subset(usa, region == "massachusetts")
 
 ggplot(mass, aes(longitude, latitude)) + 
-  geom_polygon(data = massmap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey87", size = .25) +
-  geom_point(aes(color = pid3), size = .5, na.rm = TRUE, position = jitter)+
+  geom_polygon(data = massmap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
   coord_fixed(1.3)+ theme_bw() + 
-  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "white"))
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
+
+#New York
+ny = subset(xcode, state == "NY")
+nymap = subset(usa, region == "new york")
+
+ggplot(ny, aes(longitude, latitude)) + 
+  geom_polygon(data = nymap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() + 
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
+
+#California
+cali = subset(xcode, state == "CA")
+camap = subset(usa, region == "california")
+
+ggplot(cali, aes(longitude, latitude)) + 
+  geom_polygon(data = camap, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
+  coord_fixed(1.3)+ theme_bw() + 
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+  ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
 

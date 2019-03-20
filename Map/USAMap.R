@@ -65,11 +65,17 @@ ditch_the_axes <- theme(
   axis.title = element_blank()
 )
 
+#Jitter Points
+jitter <- position_jitter(width = 0.1, height = 0.1)
+
 #Create US Plot
 ggplot(xcode, aes(longitude, latitude)) + 
-  geom_polygon(data = usa, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey87", size = .25) +
-  geom_point(aes(color = pid3), size = .5, na.rm = TRUE)+
+  geom_polygon(data = usa, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25) +
+  geom_point(aes(color = pid3), size = .2, na.rm = TRUE, position = jitter)+
   coord_fixed(1.3)+ theme_bw() +
-  ditch_the_axes + scale_color_manual(values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "white"))
+  theme(text = element_text(size = 18, colour="black"),
+        axis.title = element_text(size = 20, colour="black"),
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
+ditch_the_axes + scale_color_manual("Party ID", values=c("Republican" = "red", "Democrat" = "blue", "Independent" = "plum1"))
 
 
