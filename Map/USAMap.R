@@ -1,6 +1,6 @@
 #Create Map of Individuals and Party in US
 #Jennifer Lin
-#CCES 2016
+#CCES 2016 - https://cces.gov.harvard.edu/
 
 #Load R Data
 #cces = read.table("/Users/JenniferLin/Desktop/Working/CCES/CCES2016.tab", header = TRUE)
