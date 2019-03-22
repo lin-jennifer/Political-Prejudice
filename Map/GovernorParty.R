@@ -129,4 +129,5 @@ p2 <- p1 + scale_fill_manual("Governor Party", values = c("Republican" = "red", 
 p2 +ditch_the_axes
 
 ls(state_gov)
-  
+
+
