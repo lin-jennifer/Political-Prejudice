@@ -56,6 +56,21 @@ table(xcode$state)
 xcode<-xcode[!(xcode$state=="AK"),]
 xcode<-xcode[!(xcode$state=="HI"),]
 
+#Collapse data by State
+attach(xcode)
+aggdata <-aggregate(xcode, by=list(inputstate, CurrentGovParty), 
+                    FUN=mean, na.rm=TRUE)
+print(aggdata)
+detach(xcode)
+
+#Collapse Zipcode by state
+attach(zipcode)
+aggzip <-aggregate(zipcode, by=list(state), 
+                    FUN=mean, na.rm=TRUE)
+print(aggzip)
+detach(zipcode)
+
+
 #Ditch the Axes
 ditch_the_axes <- theme(
   axis.text = element_blank(),
@@ -69,25 +84,49 @@ ditch_the_axes <- theme(
 #Jitter Points
 jitter <- position_jitter(width = 0.15, height = 0.15)
 
+#Declare the merged variables as facotrs
+aggdata$Group.2 <- as.factor(aggdata$Group.2)
+aggdata$Group.1 <- as.factor(aggdata$Group.1)
 
-#Current Governor Party
-table(xcode$CurrentGovParty)
-xcode$inputstate
+aggzip$Group.1 <- as.factor(aggzip$Group.1)
 
-library(forcats)
-xcode$inputstate <- fct_explicit_na(xcode$inputstate, na_level = "(Missing)")
+#Merge Aggdata with USA file
+aggdata$state = aggdata$Group.1
+aggzip$state = aggzip$Group.1
+usagov = merge(aggdata, aggzip, by.x='state', by.y='state')
 
+usagov$govpid = usagov$Group.2
 
-statefill = group_by(xcode, CurrentGovParty, inputstate)
+#Create the map
 
-ggplot() + 
-  geom_polygon(data = usa, mapping = aes(x = long, y = lat, group = group, fill = region),  size = .25) +
-  geom_polygon(data = xcode, mapping = aes(x = longitude, y = latitude, fill = CurrentGovParty))
-  coord_fixed(1.3)+ theme_bw() +
+ggplot(usagov, aes(longitude.x, latitude.y)) +
+  geom_polygon(data = usa, mapping = aes(x = long, y = lat, group = group), color = "black", fill = "grey94", size = .25)+
+  geom_point(aes(color = Group.2), na.rm = TRUE)+
+  coord_fixed(1.3)+ theme_bw()  + scale_color_manual("Party ID", values=c("Republican" = "red", "Democratic" = "blue", "Independent" = "plum1"))
+
+#Use the Left Join command
+aggdata$state = tolower(aggdata$Group.1)
+usa$state = usa$region
+state_gov = left_join(usa, aggdata)  
+
+#Remove NA Rows
+state_gov<-state_gov[!(state_gov$Group.2=="NA"),]
+
+#Healey's Way https://socviz.co/maps.html
+
+library(tidyverse)
+p0 <- ggplot(data = state_gov,
+             mapping = aes(x = long, y = lat,
+                           group = group, fill = Group.2), na.rm = TRUE)
+p1 <- p0 + geom_polygon(color = "gray90", size = 0.1) +
+  #coord_map(projection = "albers", lat0 = 39, lat1 = 45) 
+  theme_bw()+coord_fixed(1.3)
+p2 <- p1 + scale_fill_manual("Governor Party", values = c("Republican" = "red", "Democratic" = "blue"))  +
   theme(text = element_text(size = 18, colour="black"),
         axis.title = element_text(size = 20, colour="black"),
-        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))+
-  ditch_the_axes 
+        title = element_text(size = 24, colour="black")) + guides(color = guide_legend(override.aes = list(size=5)))
+  #labs(title = "State Governor Party after 2016", fill = NULL)
+p2 +ditch_the_axes
 
-  
+ls(state_gov)
   
