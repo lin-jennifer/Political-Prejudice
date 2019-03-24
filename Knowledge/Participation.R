@@ -38,31 +38,55 @@ str(anes2016$wear)
 #Do any other work for party - V162013
 str(anes2016$V162013)
 table(anes2016$V162013)
+anes2016$work = car::recode(anes2016$V162013, "-6:-9 = 'NA'")
+anes2016$work = as.numeric(as.factor(anes2016$work), na.rm = TRUE)
+str(anes2016$work)
 
 #Donate to campaign - V162014
 str(anes2016$V162014)
 table(anes2016$V162014)
+anes2016$campaigndon = car::recode(anes2016$V162014, "-6:-9 = 'NA'")
+anes2016$campaigndon = as.numeric(as.factor(anes2016$campaigndon), na.rm = TRUE)
+str(anes2016$campaigndon)
 
 #Donate to Party - V162016
 str(anes2016$V162016)
 table(anes2016$V162016)
+anes2016$partydon = car::recode(anes2016$V162016, "-6:-9 = 'NA'")
+anes2016$partydon = as.numeric(as.factor(anes2016$partydon), na.rm = TRUE)
+str(anes2016$partydon)
 
 #Attend Rally/Protest - V162018A
 str(anes2016$V162018A)
 table(anes2016$V162018A)
+anes2016$attend = car::recode(anes2016$V162018A, "-6:-9 = 'NA'")
+anes2016$attend = as.numeric(as.factor(anes2016$attend), na.rm = TRUE)
+str(anes2016$attend)
 
 #Signed Petition - V162018B
 str(anes2016$V162018B)
 table(anes2016$V162018B)
+anes2016$petition = car::recode(anes2016$V162018B, "-6:-9 = 'NA'")
+anes2016$petition = as.numeric(as.factor(anes2016$petition), na.rm = TRUE)
+str(anes2016$petition)
 
 #Posted on Social Media about politics - V162018E
 str(anes2016$V162018E)
 table(anes2016$V162018E)
+anes2016$post = car::recode(anes2016$V162018E, "-6:-9 = 'NA'")
+anes2016$post = as.numeric(as.factor(anes2016$post), na.rm = TRUE)
+str(anes2016$post)
 
 #Contact US Representative or Senator - V162019
 str(anes2016$V162019)
 table(anes2016$V162019)
+anes2016$contact = car::recode(anes2016$V162019, "-6:-9 = 'NA'")
+anes2016$contact = as.numeric(as.factor(anes2016$contact), na.rm = TRUE)
+str(anes2016$contact)
 
 #Voted in 2016 - V162031X
 str(anes2016$V162031X)
 table(anes2016$V162031X)
+anes2016$vote16 = car::recode(anes2016$V162031X, "-1:-9 = 'NA'")
+anes2016$vote16 = as.numeric(as.factor(anes2016$vote16), na.rm = TRUE)
+str(anes2016$vote16)
