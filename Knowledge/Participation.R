@@ -134,14 +134,15 @@ anes2016$participation
 summary(anes2016$participation)
 hist(anes2016$participation)
 
+#Decalre Participation variable as categorical
 anes2016$participationcat = as.factor(as.numeric(anes2016$participation))
 str(anes2016$participationcat)
 table(anes2016$participationcat)
-anes2016$participationcat = recode(anes2016$participationcat, "(Missing)" = "NA")
 
 library(forcats)
 anes2016$participationcat<- fct_explicit_na(anes2016$participationcat, na_level = "(Missing)")
-
+anes2016$participationcat = recode(anes2016$participationcat, "(Missing)" = "NA")
+table(anes2016$participationcat)
 
 #Descriptive Statistics for participation by party
 library(dplyr)
