@@ -167,11 +167,11 @@ participation<-participation[!(participation$participationcat=="NA"),]
 library(ggplot2)
 library(ggpubr)
 ggplot(participation, aes(x=participationcat, y=n, fill = party)) +
-  geom_bar(stat="identity", position=position_dodge()) +
+  geom_bar(stat="identity", position=position_dodge()) + theme_classic()+
+  scale_fill_manual("Party ID", values = c("Democrat" = "blue", "Independent" = "purple", "Republican" = "red"))+
   ggtitle("Political Participation by Party")+xlab("Total Participation Acts")+ylab("Number of People")+
   theme(text = element_text(size = 18, colour="black"),
         axis.title = element_text(size = 20, colour="black"),
         title = element_text(size = 24, colour="black"),
-        plot.title = element_text(hjust = 0.5))+
-  scale_fill_manual("Party ID", values = c("Democrat" = "blue", "Independent" = "purple", "Republican" = "red"))+theme_classic()
+        plot.title = element_text(hjust = 0.5))
 
