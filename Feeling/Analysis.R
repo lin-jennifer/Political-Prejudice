@@ -4,7 +4,7 @@
 #https://electionstudies.org/data-center/ 
 
 #Load in data
-anescdf = read.csv("~/Desktop/Working/ANES/anes.csv", header = TRUE)
+anescdf = read.csv("~/Desktop/Data/ANES/anes.csv", header = TRUE)
 
 #Set Working Directory
 setwd("~/Desktop/Working/Political-Prejudice/Feeling")
