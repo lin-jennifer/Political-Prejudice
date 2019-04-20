@@ -12,6 +12,7 @@ setwd("~/Desktop/Working/Political-Prejudice/Knowledge")
 
 #Load Libraries
 library(car)
+library(dplyr)
 
 #Clean Political Participation Variables
 #Talk to others about voting - V162010
@@ -113,11 +114,12 @@ str(anes2016$vote16)
 anes2016$vote16 = car::recode(anes2016$vote16, "2 = 0")
 table(anes2016$vote16)
 
+#V161155 - Party ID 3-point - Run in Knowledge script
 #V161155 - Party ID 3-point
 str(anes2016$V161155)
 table(anes2016$V161155)
 anes2016$pid3 = car::recode(anes2016$V161155, "-8:-9 = 'NA'")
-table(anes2016$pid3)
+anes2016$pid3
 
 #Rid implicit NAs for the party id variable
 library(forcats)
