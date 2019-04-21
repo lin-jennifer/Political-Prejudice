@@ -23,7 +23,6 @@ library(car) #For general statistics
 library(ggpubr) #For publishing quality graphs
 library(lsr) #contrasts for ANOVA
 library(dplyr) #Create summary graphs
-library(plyr)
 
 #Create Political Knowledge variable
 data$knowledge <- rowSums(data[,c('biden', 'ryan', 'merkel', 'putin', 'roberts')], na.rm=TRUE)
