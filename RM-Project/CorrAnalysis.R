@@ -1,4 +1,4 @@
-################################################
+########## General Information #################
 #File: Participation and Knowledge Correlation Analysis
 #Author: Jennifer Lin
 #Requirements: "RMProjData.csv" - Refer to `Management.R` for the construction of this file
@@ -64,7 +64,7 @@ lib.sub <- data[data$ideo3re=="Liberal",]
 con.sub <- data[data$ideo3re=="Conservative",]
 mod.sub <- data[data$ideo3re=="Moderate",]
 
-######################################################################
+#################### Knowledge and Feeling by PARTY ################################
 #Political PARTY as grouping variable 
 #Political Party Feeling Thermometer as DV
 
@@ -112,6 +112,7 @@ ggscatter(data, x = "knowledge", y = "feelrep", fill = "party", color = "party",
         axis.text.x = element_text(hjust = 0, vjust = 0),
         plot.title = element_text(hjust = 0.5))
 
+############ Participation and Feeling by PARTY ########################
 #Correlations between participation and feelings
 
 #Participation and feelings towards Democrats
@@ -157,7 +158,8 @@ ggscatter(data, x = "participation", y = "feelrep", fill = "party", color = "par
         axis.text.x = element_text(hjust = 0, vjust = 0),
         plot.title = element_text(hjust = 0.5))
 
-##############################################################################
+#################### Knowledge and Feeling by IDEOLOGY ###################################
+
 #Political Ideology as grouping variable
 #Political Ideology as Dependent variable
 
@@ -202,6 +204,8 @@ ggscatter(data, x = "knowledge", y = "feelcons", fill = "ideo3re", color = "ideo
         title = element_text(size = 24, colour="black"),
         axis.text.x = element_text(hjust = 0, vjust = 0),
         plot.title = element_text(hjust = 0.5))
+
+############### Participation and Feeling by IDEOLOGY ########################
 
 #Participation and feelings towards Liberals
 #Use entire dataset
