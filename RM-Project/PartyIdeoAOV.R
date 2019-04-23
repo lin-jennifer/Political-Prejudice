@@ -30,12 +30,6 @@ library(ggplot2) #Graphics
 library(stargazer) #Exporting Plots
 
 ################## Clean Data #######################
-#Create Political Knowledge variable
-data$knowledge <- rowSums(data[,c('biden', 'ryan', 'merkel', 'putin', 'roberts')], na.rm=TRUE)
-
-#Create Political Participation Variable
-data$participation <- rowSums(data[, c('talk', 'meeting', 'wear', 'work', 'campaigndon', 'partydon', 'attend', 'petition', 'post', 'contact', 'vote16')], na.rm = TRUE)
-
 #Remove "No Party", "other" and NAs from party
 data<-data[!(data$party=="NA"),]
 data<-data[!(data$party=="No Party"),]   
@@ -77,35 +71,7 @@ data$ideo3num <- recode(data$ideo3num, "Conservative" = '3')
 data$ideo3num <- recode(data$ideo3num, "NA" = 'NA')
 table(data$ideo3num)
 
-#Condense Knowledge and Participation Variables to low/medium/high concept
-#Political Knowledge
-#1 = knows little, 2 = knows a lot
-table(data$knowledge)
-data<-data[!(data$knowledge=="NA"),]
-data$know <- car::recode(data$knowledge, "0:2 = 1")
-data$know <- car::recode(data$know, "3:5 = 2")
-table(data$know)
-
-#Political participation
-#Divided odly to capture the population based on data, rather than scale by the possible values
-boxplot(data$participation) #Used to make the decision based on where the 25, 50 and 75 percent were
-#1 = participates little, 2 = participates moderately, 3 = participates a lot
-table(data$participation)
-data<-data[!(data$participation=="NA"),]
-data$part <- car::recode(data$participation, "0:1 = 1")
-data$part <- car::recode(data$part, "2:4 = 2")
-data$part <- car::recode(data$part, "5:11 = 3")
-table(data$part)
-
 #Declare variables as factors for graphing purposes
-data$knowfactor <- factor(data$know, 
-                          levels = c(1, 2),
-                          labels = c("Less", "More"))
-
-data$partfactor <- factor(data$part, 
-                          levels = c(1, 2, 3),
-                          labels = c("Less", "Moderate", "More"))
-
 data$partyfactor <- factor(data$partynum, 
                            levels = c(1, 2, 3),
                            labels = c("Democrat", "Independent", "Republican"))
