@@ -1,5 +1,5 @@
 ########## General Information #################
-#File: Participation and Knowledge ANOVA Analysis
+#File: Party by Ideology ANOVA Analysis
 #Author: Jennifer Lin
 #Requirements: "RMProjData.csv" - Refer to `Management.R` for the construction of this file
 #Root File: ANES 2016 Time Series (https://electionstudies.org/project/2016-time-series-study/)
