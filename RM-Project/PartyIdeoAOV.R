@@ -230,3 +230,122 @@ ggplot(cons.ideo, aes(x=ideofactor, y=mean, fill = knowfactor )) +
         title = element_text(size = 26, colour="black"),
         plot.title = element_text(hjust = 0.5))+
   scale_fill_manual("Knowledge", values = c("Less" = "firebrick1", "More" = "firebrick3"))
+
+############# Party - Participation on Party Feelings ANOVA #####################
+
+# 3(Party ID: Republican, Democrat, Independent) x 3(Participation: Low, Medium, High)
+
+#Feelings towards Democratic Party
+part.dem <- aov(feeldem ~ partfactor*partyfactor, data = data)
+summary(part.dem)
+etaSquared(part.dem, anova = TRUE)
+
+#Comupte Cell means for feelings towards democats
+groups <- group_by(data, partfactor, partyfactor)
+dem.part <- summarise(groups,
+                      mean = mean(feeldem, na.rm=TRUE),
+                      sd = sd(feeldem, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+dem.part
+ggplot(dem.part, aes(x=partyfactor, y=mean, fill = partfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Party and Participation") +
+  xlab("Political Party") +
+  ylab("Feelings towards Democrats") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Participation", values = c("Less" = "blue1", "Moderate" = "blue2", "More" = "blue3"))
+
+#Feelings towards Republican party
+part.rep <- aov(feelrep ~ partfactor*partyfactor, data = data)
+summary(part.rep)
+etaSquared(part.rep, anova = TRUE)
+
+#Comupte Cell means for feelings towards republicans
+groups <- group_by(data, partfactor, partyfactor)
+rep.part <- summarise(groups,
+                      mean = mean(feelrep, na.rm=TRUE),
+                      sd = sd(feelrep, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+rep.part
+ggplot(rep.part, aes(x=partyfactor, y=mean, fill = partfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Party and Participation") +
+  xlab("Political Party") +
+  ylab("Feelings towards Republicans") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Participation", values = c("Less" = "red1", "Moderate" = "red2", "More" = "red3"))
+
+########### Ideology - Participation on Ideology Feelings ANOVA ###########
+
+# 3(Ideology: Liberal, Moderate, Conservative) x 3(Participation: Low, Moderate, High)
+
+#Feelings towards Liberals
+part.lib <- aov(feellib ~ partfactor*ideofactor, data = data)
+summary(part.lib)
+etaSquared(part.lib, anova = TRUE)
+
+#Comupte Cell means for feelings towards liberals
+groups <- group_by(data, partfactor, ideofactor)
+liberalpart <- summarise(groups,
+                      mean = mean(feellib, na.rm=TRUE),
+                      sd = sd(feellib, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+liberalpart
+ggplot(liberalpart, aes(x=ideofactor, y=mean, fill = partfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Ideology and Participation") +
+  xlab("Political Ideology") +
+  ylab("Feelings towards Liberals") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Participation", values = c("Less" = "royalblue1","Moderate" ="royalblue2", "More" = "royalblue3"))
+
+#Feelings towards Conservatives
+part.cons <- aov(feelcons ~ partfactor*ideofactor, data = data)
+summary(part.cons)
+etaSquared(part.cons, anova = TRUE)
+
+#Comupte Cell means for feelings towards liberals
+groups <- group_by(data, partfactor, ideofactor)
+conservepart <- summarise(groups,
+                       mean = mean(feelcons, na.rm=TRUE),
+                       sd = sd(feelcons, na.rm=TRUE),
+                       n = n(),
+                       se=sd/sqrt(n),
+                       ci = qt(0.975,df=n-1)*se)
+conservepart
+ggplot(conservepart, aes(x=ideofactor, y=mean, fill = partfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Ideology and Participation") +
+  xlab("Political Ideology") +
+  ylab("Feelings towards Conservatives") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Participation", values = c("Less" = "firebrick1", "Moderate" = "firebrick2", "More" = "firebrick3"))
+
+
+
+
+
+
+
