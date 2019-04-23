@@ -73,7 +73,13 @@ table(data$ideo3re)
 #Rid NAs from the data for ideology
 data<-data[!(data$ideo3re=="NA"),]
 
-#Recode Ideology Variable
+#Recode Ideology Variable to numeric
+table(data$ideo3re)
+data$ideo3num <- recode(data$ideo3re, "Liberal" = '1')
+data$ideo3num <- recode(data$ideo3num, "Moderate" = '2')
+data$ideo3num <- recode(data$ideo3num, "Conservative" = '3')
+data$ideo3num <- recode(data$ideo3num, "NA" = 'NA')
+table(data$ideo3num)
 
 #Condense Knowledge and Participation Variables to low/medium/high concept
 #Political Knowledge
@@ -108,9 +114,9 @@ data$partyfactor <- factor(data$partynum,
                            levels = c(1, 2, 3),
                            labels = c("Democrat", "Independent", "Republican"))
 
-data$ideofactor <- factor(data$partynum, 
+data$ideofactor <- factor(data$ideo3num, 
                           levels = c(1, 2, 3),
-                          labels = c("Democrat", "Independent", "Republican"))
+                          labels = c("Liberal", "Moderate", "Conservative"))
 
 
 ############# Party - Knowledge on Party Feelings ANOVA ############
@@ -122,7 +128,7 @@ dem.party <- aov(feeldem ~ knowfactor*partyfactor, data = data)
 summary(dem.party)
 etaSquared(dem.party, anova = TRUE)
 
-#Comupte Cell means for feelings towards dems
+#Comupte Cell means for feelings towards democats
 groups <- group_by(data, knowfactor, partyfactor)
 dem.feel <- summarise(groups,
                       mean = mean(feeldem, na.rm=TRUE),
@@ -148,7 +154,7 @@ rep.party <- aov(feelrep ~ knowfactor*partyfactor, data = data)
 summary(rep.party)
 etaSquared(rep.party, anova = TRUE)
 
-#Comupte Cell means for feelings towards dems
+#Comupte Cell means for feelings towards republicans
 groups <- group_by(data, knowfactor, partyfactor)
 rep.feel <- summarise(groups,
                       mean = mean(feelrep, na.rm=TRUE),
@@ -171,3 +177,56 @@ ggplot(rep.feel, aes(x=partyfactor, y=mean, fill = knowfactor )) +
 
 ########### Ideology - Knowledge on Ideology Feelings ANOVA ###########
 
+# 3(Ideology: Liberal, Moderate, Conservative) x 2(Knowledge: More or Less)
+
+#Feelings towards Liberals
+lib.ideo <- aov(feellib ~ knowfactor*ideofactor, data = data)
+summary(lib.ideo)
+etaSquared(lib.ideo, anova = TRUE)
+
+#Comupte Cell means for feelings towards liberals
+groups <- group_by(data, knowfactor, ideofactor)
+lib.ideo <- summarise(groups,
+                      mean = mean(feellib, na.rm=TRUE),
+                      sd = sd(feellib, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+lib.ideo
+ggplot(lib.ideo, aes(x=ideofactor, y=mean, fill = knowfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Ideology and Knowledge") +
+  xlab("Political Ideology") +
+  ylab("Feelings towards Liberals") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Knowledge", values = c("Less" = "royalblue1", "More" = "royalblue3"))
+
+#Feelings towards Conservatives
+cons.ideo <- aov(feelcons ~ knowfactor*ideofactor, data = data)
+summary(cons.ideo)
+etaSquared(cons.ideo, anova = TRUE)
+
+#Comupte Cell means for feelings towards liberals
+groups <- group_by(data, knowfactor, ideofactor)
+cons.ideo <- summarise(groups,
+                      mean = mean(feelcons, na.rm=TRUE),
+                      sd = sd(feelcons, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+cons.ideo
+ggplot(cons.ideo, aes(x=ideofactor, y=mean, fill = knowfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Ideology and Knowledge") +
+  xlab("Political Ideology") +
+  ylab("Feelings towards Conservatives") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Knowledge", values = c("Less" = "firebrick1", "More" = "firebrick3"))
