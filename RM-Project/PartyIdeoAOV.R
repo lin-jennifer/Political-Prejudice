@@ -73,6 +73,8 @@ table(data$ideo3re)
 #Rid NAs from the data for ideology
 data<-data[!(data$ideo3re=="NA"),]
 
+#Recode Ideology Variable
+
 #Condense Knowledge and Participation Variables to low/medium/high concept
 #Political Knowledge
 #1 = knows little, 2 = knows a lot
@@ -106,14 +108,19 @@ data$partyfactor <- factor(data$partynum,
                            levels = c(1, 2, 3),
                            labels = c("Democrat", "Independent", "Republican"))
 
+data$ideofactor <- factor(data$partynum, 
+                          levels = c(1, 2, 3),
+                          labels = c("Democrat", "Independent", "Republican"))
+
 
 ############# Party - Knowledge on Party Feelings ANOVA ############
 
 # 3(Party ID: Republican, Democrat, Independent) x 2(Knowledge: More or Less)
 
-dem <- aov(feeldem ~ knowfactor*partyfactor, data = data)
-summary(dem)
-etaSquared(dem, anova = TRUE)
+#Feelings towards Democratic Party
+dem.party <- aov(feeldem ~ knowfactor*partyfactor, data = data)
+summary(dem.party)
+etaSquared(dem.party, anova = TRUE)
 
 #Comupte Cell means for feelings towards dems
 groups <- group_by(data, knowfactor, partyfactor)
@@ -136,4 +143,31 @@ ggplot(dem.feel, aes(x=partyfactor, y=mean, fill = knowfactor )) +
         plot.title = element_text(hjust = 0.5))+
   scale_fill_manual("Knowledge", values = c("Less" = "blue", "More" = "blue4"))
 
+#Feelings towards Republican party
+rep.party <- aov(feelrep ~ knowfactor*partyfactor, data = data)
+summary(rep.party)
+etaSquared(rep.party, anova = TRUE)
+
+#Comupte Cell means for feelings towards dems
+groups <- group_by(data, knowfactor, partyfactor)
+rep.feel <- summarise(groups,
+                      mean = mean(feelrep, na.rm=TRUE),
+                      sd = sd(feelrep, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+rep.feel
+ggplot(rep.feel, aes(x=partyfactor, y=mean, fill = knowfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Party and Knowledge") +
+  xlab("Political Party") +
+  ylab("Feelings towards Republicans") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Knowledge", values = c("Less" = "red", "More" = "red3"))
+
+########### Ideology - Knowledge on Ideology Feelings ANOVA ###########
 

@@ -86,9 +86,9 @@ data$partfactor <- factor(data$part,
 #Two way Anota for participation and knowledge on feelings
 
 #Feelings towards Democrats
-dem <- aov(feeldem ~ as.factor(know)*as.factor(part), data = data)
+dem <- aov(feeldem ~ knowfactor*partfactor, data = data)
 summary(dem)
-etaSquared(dem)
+etaSquared(dem, anova = TRUE)
 
 #Comupte Cell means for feelings towards dems
 groups <- group_by(data, knowfactor, partfactor)
@@ -112,8 +112,9 @@ ggplot(dem.feel, aes(x=partfactor, y=mean, fill = knowfactor )) +
   scale_fill_manual("Knowledge", values = c("Less" = "blue", "More" = "blue4"))
 
 #Feelings towards Republicans
-rep <- aov(feelrep ~ as.factor(know)*as.factor(part), data = data)
+rep <- aov(feelrep ~ knowfactor*partfactor, data = data)
 summary(rep)
+etaSquared(rep, anova = TRUE)
 
 #Comupte Cell means for feelings towards Republicans
 groups <- group_by(data, knowfactor, partfactor)
@@ -137,8 +138,9 @@ ggplot(rep.feel, aes(x=partfactor, y=mean, fill = knowfactor )) +
   scale_fill_manual("Knowledge", values = c("Less" = "red", "More" = "red3"))
 
 #Feelings towards Liberals
-lib <- aov(feellib ~ as.factor(know)*as.factor(part), data = data)
+lib <- aov(feellib ~ knowfactor*partfactor, data = data)
 summary(lib)
+etaSquared(lib, anova = TRUE)
 
 #Comupte Cell means for feelings towards Liberals
 groups <- group_by(data, knowfactor, partfactor)
@@ -162,8 +164,9 @@ ggplot(lib.feel, aes(x=partfactor, y=mean, fill = knowfactor )) +
   scale_fill_manual("Knowledge", values = c("Less" = "royalblue1", "More" = "royalblue3"))
 
 #Feelings towards Conservatives
-cons <- aov(feelcons ~ as.factor(know)*as.factor(part), data = data)
+cons <- aov(feelcons ~ knowfactor*partfactor, data = data)
 summary(cons)
+etaSquared(cons, anova = TRUE)
 
 #Comupte Cell means for feelings towards Conservatives
 groups <- group_by(data, knowfactor, partfactor)
