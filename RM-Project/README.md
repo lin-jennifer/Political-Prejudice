@@ -12,7 +12,7 @@ For this study: I plan to run the following analyses
 
 The root file for the analyses come from the ANES 2016 Time Series Data which can be accessed for free online at the following links:
 
-- [ICPSR](https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36824)[^1]
+- [ICPSR](https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36824)
 - [ANES Data Center](https://electionstudies.org/project/2016-time-series-study/)
 
 The data used for the analyses are a condensed version of the main file. The `Management.R` script file cleans the data for analysis and extracts only the necessary variables for the analysis.
@@ -56,4 +56,4 @@ The following code files were generated after running the above files. The resul
 
 This folder contains the graphs generated in each of the R codes.
 
-[^1]: American National Election Studies, University of Michigan, and Stanford University. ANES 2016 Time Series Study. Ann Arbor, MI: Inter-university Consortium for Political and Social Research [distributor], 2017-09-19. https://doi.org/10.3886/ICPSR36824.v2
+
