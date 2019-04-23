@@ -29,6 +29,9 @@ library(car) #For general statistics
 library(ggpubr) #For publishing quality graphs
 library(lsr) #contrasts for ANOVA
 library(dplyr) #Create summary graphs
+library(phia) #Contrasts
+library(ggplot2) #Graphics
+library(stargazer) #Exporting Plots
 
 ################## Clean Data #######################
 #Create Political Knowledge variable
@@ -42,6 +45,15 @@ data<-data[!(data$party=="NA"),]
 data<-data[!(data$party=="No Party"),]   
 data<-data[!(data$party=="Other"),]
 table(data$party)
+
+#Recode Party to numeric
+table(data$party)
+data$partynum <- recode(data$party, "Democrat" = '1')
+data$partynum <- recode(data$partynum, "Independent" = '2')
+data$partynum <- recode(data$partynum, "Republican" = '3')
+data$partynum <- recode(data$partynum, "No Party" = 'NA')
+data$partynum <- recode(data$partynum, "Other" = 'NA')
+table(data$partynum)
 
 #Clean Ideology Variables - Use 7 category since more people respond to this
 str(data$ideo7)
@@ -90,9 +102,38 @@ data$partfactor <- factor(data$part,
                           levels = c(1, 2, 3),
                           labels = c("Less", "Moderate", "More"))
 
+data$partyfactor <- factor(data$partynum, 
+                           levels = c(1, 2, 3),
+                           labels = c("Democrat", "Independent", "Republican"))
+
+
 ############# Party - Knowledge on Party Feelings ANOVA ############
 
 # 3(Party ID: Republican, Democrat, Independent) x 2(Knowledge: More or Less)
 
+dem <- aov(feeldem ~ knowfactor*partyfactor, data = data)
+summary(dem)
+etaSquared(dem, anova = TRUE)
+
+#Comupte Cell means for feelings towards dems
+groups <- group_by(data, knowfactor, partyfactor)
+dem.feel <- summarise(groups,
+                      mean = mean(feeldem, na.rm=TRUE),
+                      sd = sd(feeldem, na.rm=TRUE),
+                      n = n(),
+                      se=sd/sqrt(n),
+                      ci = qt(0.975,df=n-1)*se)
+dem.feel
+ggplot(dem.feel, aes(x=partyfactor, y=mean, fill = knowfactor )) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
+  ggtitle("Party and Knowledge") +
+  xlab("Political Party") +
+  ylab("Feelings towards Democrats") + ylim(0,100)+ theme_classic()+
+  theme(text = element_text(size = 22, colour="black"),
+        axis.title = element_text(size = 24, colour="black"),
+        title = element_text(size = 26, colour="black"),
+        plot.title = element_text(hjust = 0.5))+
+  scale_fill_manual("Knowledge", values = c("Less" = "blue", "More" = "blue4"))
 
 

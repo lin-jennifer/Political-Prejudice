@@ -88,6 +88,7 @@ data$partfactor <- factor(data$part,
 #Feelings towards Democrats
 dem <- aov(feeldem ~ as.factor(know)*as.factor(part), data = data)
 summary(dem)
+etaSquared(dem)
 
 #Comupte Cell means for feelings towards dems
 groups <- group_by(data, knowfactor, partfactor)
