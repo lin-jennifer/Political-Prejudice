@@ -325,6 +325,7 @@ cons.feel <- summarise(groups,
                        se=sd/sqrt(n),
                        ci = qt(0.975,df=n-1)*se)
 cons.feel
+
 ggplot(cons.feel, aes(x=partfactor, y=mean, fill = knowfactor )) +
   geom_bar(stat="identity", position=position_dodge()) +
   geom_errorbar(aes(ymin=mean-ci, ymax=mean+ci), width=.2, size = 2, position=position_dodge(.9)) +
