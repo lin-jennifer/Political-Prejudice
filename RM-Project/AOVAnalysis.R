@@ -1,4 +1,4 @@
-################################################
+########## General Information #################
 #File: Participation and Knowledge ANOVA Analysis
 #Author: Jennifer Lin
 #Requirements: "RMProjData.csv" - Refer to `Management.R` for the construction of this file
