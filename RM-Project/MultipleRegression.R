@@ -102,3 +102,8 @@ plot(repfeel) #Residual plot
 libfeel <- lm(feellib ~ participation + knowledge + ideo3re, data = data)
 summary(libfeel)
 coefplot(libfeel)
+
+#Feelings towards Conservatives
+consfeel <- lm(feelcons ~ participation + knowledge + ideo3re, data = data)
+summary(consfeel)
+coefplot(consfeel)
