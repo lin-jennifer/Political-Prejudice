@@ -49,6 +49,7 @@ table(anes2016$V162171)
 anes2016$ideo7 = car::recode(anes2016$V162171, "-6:-9 = 'NA'")
 anes2016$ideo7 <- recode(anes2016$ideo7, "(99) 99. Haven't thought much about this" = "NA")
 anes2016$ideo7 <- as.numeric(as.factor(anes2016$ideo7))
+anes2016$ideo7 <- car::recode(anes2016$ideo7, "8 = 'NA'")
 table(anes2016$ideo7)
 
 #Participant Education
