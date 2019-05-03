@@ -19,6 +19,54 @@ The data used for the analyses are a condensed version of the main file. The `Ma
 
 The resulting CSV file is located in the repository as `RMProjData.csv` and can be used to replicate the analyses in SAS, SPSS and Stata. The R Code for converting this file to formats compatible in these other analyses software is available in the `DataConvert.R` file.
 
+## Core Variables
+
+The code for the variable cleaning process are all located in the `Knowledge/` folder in this repository.
+
+### Political Participation 
+
+|ANES Variable Code| Variable Name| Notes|
+|:-------------|:-----------:|:----------|
+|V162010| talk| Talk to people about voting|
+|V162011| meeting| Attend a political meeting|
+|V162012| wear| Wear Campaign Button|
+|V162013| work|Do any other work for party|
+|V162014| campaigndon| Donate money to a campaign|
+|V162016| partydon| Donate money to a political party|
+|V162018A| attend| Attend a rally or protest|
+|V162018B| petition| Signed a petition|
+|V162018E| post| Post on social media about politics|
+|V162019| contact| Contact a US Representative or Senator|
+|V162031X| vote16| Voted in the 2016 Presidential Election|
+
+### Political Knowledge
+
+|ANES Variable Code| Variable Name| Notes|
+|:-------------|:-----------:|:----------|
+|V162072| biden| Joe Biden - Vice President of the United States|
+|V162073A| ryan| Paul Ryan - Speaker of the House|
+|V162074B| merkel| Angela Merkel - Chancellor of Germany|
+|V162075A| putin| Valdmir Putin - President of Russia|
+|V162076B| roberts| John Roberts - Chief Justice of the Supreme Court|
+
+### Feeling Thermometers
+
+|ANES Variable Code| Variable Name| Notes|
+|:-------------|:-----------:|:----------|
+|V161095| feeldem| Feelings towards Democrats --> 0 - 100|
+|V161096| feelrep| Feelings towards Republicans --> 0 - 100|
+|V162097| feellib| Feelings towards Liberals --> 0 - 100|
+|V162101| feelcons| Feelings towards Conservatives --> 0 - 100|
+
+### Participant Variables
+
+|ANES Variable Code| Variable Name| Notes|
+|:-------------|:-----------:|:----------|
+|V161158X| pid7| Party ID 7 category, 1 = Strong Democrat, 7 = Strong Republican|
+|V161155| pid3| Party ID 3 category, 1 = Democrat, 2 = Republican, 3 = Independent|
+|V162171| ideo7| Ideology 7-point, 1 = Extremely Liberal, 7 = Extremely Conservative|
+|V162171A| ideo3| Ideology 3-point, 1 = Liberal, 2 = Conservative, 3 = Moderate| 
+
 ## Code Files
 
 The following files address the questions of interest proposed for this project. 
