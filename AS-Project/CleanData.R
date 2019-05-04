@@ -29,13 +29,6 @@ table(anes2016$V161087)
 anes2016$trump <- car::recode(anes2016$V161087, "-88:-99 = 'NA'")
 table(anes2016$trump)
 
-#Participant Race
-table(anes2016$V161310X)
-str(anes2016$V161310X)
-anes2016$race <- car::recode(anes2016$V161310X, "-9 = 'NA'")
-anes2016$race <- as.numeric(as.factor(anes2016$race))
-table(anes2016$race)
-
 #Participant Party - 7-category
 str(anes2016$V161158X)
 table(anes2016$V161158X)
@@ -85,10 +78,10 @@ psych::describe(anes2016$feelrep, na.rm = TRUE)
 ############### Export data ####################
 #Pull out the variables
 which( colnames(anes2016)=="clinton" ) #1197
-which( colnames(anes2016)=="feelrep" ) #1205
+which( colnames(anes2016)=="feelrep" ) #1204
 
 #Create data frame
-composite <- anes2016[,c(2, 1197:1205)]
+composite <- anes2016[,c(2, 1197:1204)]
 
 #Export data
 library(rio)
