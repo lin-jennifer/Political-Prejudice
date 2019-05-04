@@ -1,1 +1,61 @@
 *Advanced Statistics Final Project.
+*Jennifer Lin.
+*Requires: ANES 2016 Time Series Data.
+*See R Code for shortened version.
+
+*Multiple Regression with Feelings towards Republican Candidate.
+
+*Simultaneous Regression.
+regression
+/variables=education income pid7 trump
+/missing=listwise
+/descriptives=mean stddev corr
+/statistics=coeff r anova
+/dependent=trump
+/method=enter education income pid7.
+
+*Hierarchal Regression.
+regression
+/variables=education income pid7 trump
+/missing=listwise
+/descriptives=mean stddev corr 
+/statistics=coeff r anova change
+/dependent=trump
+/method=enter pid7
+/method=enter education income.
+
+*Multiple Regression with Feelings towards Democratic Candidate.
+*Simultaneous Regression.
+regression
+/variables=education income pid7 clinton
+/missing=listwise
+/descriptives=mean stddev corr
+/statistics=coeff r anova
+/dependent=clinton
+/method=enter education income pid7.
+
+*Hierarchal Regression.
+regression
+/variables=education income pid7 clinton
+/missing=listwise
+/descriptives=mean stddev corr 
+/statistics=coeff r anova change
+/dependent=clinton
+/method=enter pid7
+/method=enter education income.
+
+*Correlations between party feelings and candidate feelings.
+
+*Republicans.
+correlations
+/variables = feelrep trump
+/missing = pairwise
+/statistics = descriptives
+/print = twotail nosig.
+
+*Democrats.
+correlations
+/variables = feeldem clinton 
+/missing = pairwise
+/statistics = descriptives
+/print = twotail nosig.
