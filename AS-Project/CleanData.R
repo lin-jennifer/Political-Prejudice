@@ -1,5 +1,5 @@
 ########## General Information #################
-#Purpose: Extrace data for Project
+#Purpose: Clean data for Project
 #Author: Jennifer Lin
 #Requires: ANES 2016 Time Series Data 
 #Access: https://electionstudies.org/project/2016-time-series-study/
@@ -35,6 +35,12 @@ table(anes2016$V161158X)
 anes2016$pid7 = car::recode(anes2016$V161158X, "-8:-9 = 'NA'")
 anes2016$pid7 <- as.numeric(as.factor(anes2016$pid7))
 table(anes2016$pid7)
+
+#V161155 - Party ID 3-point
+str(anes2016$V161155)
+table(anes2016$V161155)
+anes2016$pid3 = car::recode(anes2016$V161155, "-8:-9 = 'NA'")
+table(anes2016$pid3)
 
 #Participant Ideology - 7-point
 str(anes2016$V162171)
@@ -78,12 +84,13 @@ psych::describe(anes2016$feelrep, na.rm = TRUE)
 ############### Export data ####################
 #Pull out the variables
 which( colnames(anes2016)=="clinton" ) #1197
-which( colnames(anes2016)=="feelrep" ) #1204
+which( colnames(anes2016)=="feelrep" ) #1205
 
 #Create data frame
-composite <- anes2016[,c(2, 1197:1204)]
+composite <- anes2016[,c(2, 1197:1205)]
 
 #Export data
 library(rio)
 export(composite, "anes16.csv")
 export(composite, "anes16.sav")
+
