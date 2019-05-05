@@ -78,6 +78,8 @@ The following files address the questions of interest proposed for this project.
 
 `AOVAnalysis.R`: Run ANOVA to understand the interaction between knowledge and participation on feelings towards Democrats, Republicans, Liberals, and Conservatives.
 
+`MultipleRegression.R`: Run ANOVA analysis at Multiple Regressions, keeping all variables of interest in the continuous form rather than capsizing them to categorical variables. These results are those reported in the analysis.
+
 ## Additional Code Files
 
 The following code files were generated after running the above files. The results prompted further curiosity and motivation to run analyses to answer the following questions.
@@ -102,6 +104,10 @@ The following code files were generated after running the above files. The resul
 
 ## Graphics
 
-This folder contains the graphs generated in each of the R codes.
+This folder contains the graphs generated in each of the R codes. Each file is named in the same manner that the R script is named. 
+
+## Presentation
+
+The presentation was constructed in LaTeX using Beamer. All graphics used in the presentation are located in the folder for easy access.
 
 
