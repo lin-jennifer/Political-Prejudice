@@ -71,6 +71,8 @@ The code for the variable cleaning process are all located in the `Knowledge/` f
 
 The following files address the questions of interest proposed for this project. 
 
+`Descriptives.R`: Contains code to run the statistics needed to write the participant descriptives section of the paper. Summarizes the participant variables of interest.
+
 `CorrAnalysis.R`: Run correlations for the knowledge and participation variables. Code answers the following questions:
 
 - Does more knowledge lead to more polarized feelings towards the opposite party?
