@@ -67,7 +67,33 @@ consfeel <- lm(feelcons ~ participation + knowledge + ideo7, data = data)
 summary(consfeel)
 coefplot(consfeel)
 
-########## Testing for Interactions ################
+######### Testing for Interactions without Party ###############
+
+#Feelings towards Democrat
+demfeel <- lm(feeldem ~ (participation + knowledge)^2, data=data)
+anova(demfeel)
+summary(demfeel)
+coefplot(demfeel) #Coeficient Plot
+
+#Feelings towards Republicans
+repfeel <- lm(feelrep ~ (participation + knowledge)^2, data=data)
+anova(repfeel)
+summary(repfeel)
+coefplot(repfeel) #Coeficient Plot
+
+#Feelings towards Liberals
+libfeel <- lm(feellib ~ (participation + knowledge)^2, data = data)
+anova(libfeel)
+summary(libfeel)
+coefplot(libfeel)
+
+#Feelings towards Conservatives
+consfeel <- lm(feelcons ~ (participation + knowledge)^2, data = data)
+anova(consfeel)
+summary(consfeel)
+coefplot(consfeel)
+
+########## Testing for Interactions with Party ################
 
 #Feelings towards Democrat
 demfeel <- lm(feeldem ~ (participation + knowledge + pid7)^3, data=data)
