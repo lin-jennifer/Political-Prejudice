@@ -23,6 +23,7 @@ library(car) #For general statistics
 library(ggpubr) #For publishing quality graphs
 library(lsr) #contrasts for ANOVA
 library(dplyr) #Create summary graphs
+library(psych)
 
 #Create Political Knowledge variable
 data$knowledge <- rowSums(data[,c('biden', 'ryan', 'merkel', 'putin', 'roberts')], na.rm=TRUE)
@@ -78,6 +79,11 @@ cor.test(dem.sub$knowledge, dem.sub$feeldem, method = "pearson", use = "complete
 cor.test(rep.sub$knowledge, rep.sub$feeldem, method = "pearson", use = "complete.obs")
 cor.test(ind.sub$knowledge, ind.sub$feeldem, method = "pearson", use = "complete.obs")
 
+#Feeling towards Democrats descriptives
+psych::describe(dem.sub$feeldem)
+psych::describe(rep.sub$feeldem)
+psych::describe(ind.sub$feeldem)
+
 #Create scatterplot
 ggscatter(data, x = "knowledge", y = "feeldem", fill = "party", color = "party", 
           add = "reg.line", conf.int = TRUE, size = 1.5,
@@ -99,7 +105,12 @@ cor.test(dem.sub$knowledge, dem.sub$feelrep, method = "pearson", use = "complete
 cor.test(rep.sub$knowledge, rep.sub$feelrep, method = "pearson", use = "complete.obs")
 cor.test(ind.sub$knowledge, ind.sub$feelrep, method = "pearson", use = "complete.obs")
 
-#Create scatterplot
+#Feeling towards Republicans descriptives
+psych::describe(dem.sub$feelrep)
+psych::describe(rep.sub$feelrep)
+psych::describe(ind.sub$feelrep)
+
+2#Create scatterplot
 ggscatter(data, x = "knowledge", y = "feelrep", fill = "party", color = "party", 
           add = "reg.line", conf.int = TRUE, size = 1.5,
           cor.coef = FALSE, cor.method = "pearson",
@@ -171,7 +182,12 @@ cor.test(lib.sub$knowledge, lib.sub$feellib, method = "pearson", use = "complete
 cor.test(con.sub$knowledge, con.sub$feellib, method = "pearson", use = "complete.obs")
 cor.test(mod.sub$knowledge, mod.sub$feellib, method = "pearson", use = "complete.obs")
 
-#Create scatterplot
+#Feeling towards Liberals descriptives
+psych::describe(lib.sub$feellib)
+psych::describe(con.sub$feellib)
+psych::describe(mod.sub$feellib)
+
+1#Create scatterplot
 ggscatter(data, x = "knowledge", y = "feellib", fill = "ideo3re", color = "ideo3re", 
           add = "reg.line", conf.int = TRUE, size = 1.5,
           cor.coef = FALSE, cor.method = "pearson",
@@ -191,6 +207,11 @@ cor.test(data$knowledge, data$feelcons, method = "pearson", use = "complete.obs"
 cor.test(lib.sub$knowledge, lib.sub$feelcons, method = "pearson", use = "complete.obs")
 cor.test(con.sub$knowledge, con.sub$feelcons, method = "pearson", use = "complete.obs")
 cor.test(mod.sub$knowledge, mod.sub$feelcons, method = "pearson", use = "complete.obs")
+
+#Feeling towards Conservatives descriptives
+psych::describe(lib.sub$feelcons)
+psych::describe(con.sub$feelcons)
+psych::describe(mod.sub$feelcons)
 
 #Create scatterplot
 ggscatter(data, x = "knowledge", y = "feelcons", fill = "ideo3re", color = "ideo3re", 
