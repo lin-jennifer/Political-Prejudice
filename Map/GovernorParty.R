@@ -4,7 +4,7 @@
 
 #Load R Data
 #cces = read.table("/Users/JenniferLin/Desktop/Working/CCES/CCES2016.tab", header = TRUE)
-load("/Users/JenniferLin/Desktop/Working/CCES/CCES16_Common_OUTPUT_Feb2018_VV.RData")
+load("/Users/JenniferLin/Desktop/Data/CCES/CCES16_Common_OUTPUT_Feb2018_VV.RData")
 
 #Set Working Directory
 setwd("~/Desktop/Working/Political-Prejudice/Map")
